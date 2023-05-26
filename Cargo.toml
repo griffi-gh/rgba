@@ -1,0 +1,3 @@
+[workspace]
+members = ["chonk-arm", "chonk-gba", "chonk-frontend"]
+resolver = "2"
