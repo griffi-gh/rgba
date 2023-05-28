@@ -2,27 +2,6 @@ use crate::mode::Mode;
 
 #[repr(u8)]
 #[derive(Clone, Copy, Debug)]
-pub enum Gpr {
-  R0 = 0x00,
-  R1 = 0x01,
-  R2 = 0x02,
-  R3 = 0x03,
-  R4 = 0x04,
-  R5 = 0x05,
-  R6 = 0x06,
-  R7 = 0x07,
-  R8 = 0x08,
-  R9 = 0x09,
-  R10 = 0x0a,
-  R11 = 0x0b,
-  R12 = 0x0c,
-  R13 = 0x0d,
-  R14 = 0x0e,
-  R15 = 0x0f,
-}
-
-#[repr(u8)]
-#[derive(Clone, Copy, Debug)]
 pub enum ModeGpr {
   R0 = 0x00,
   R1 = 0x01,
@@ -61,8 +40,29 @@ pub enum ModeGpr {
   R14Und = 0x24,
 }
 impl ModeGpr {
-  const MAX: u8 = 0x24;
-  const LEN: usize = Self::MAX as usize + 1;
+  pub const MAX: u8 = 0x24;
+  pub const LEN: usize = Self::MAX as usize + 1;
+}
+
+#[repr(u8)]
+#[derive(Clone, Copy, Debug)]
+pub enum Gpr {
+  R0 = 0x00,
+  R1 = 0x01,
+  R2 = 0x02,
+  R3 = 0x03,
+  R4 = 0x04,
+  R5 = 0x05,
+  R6 = 0x06,
+  R7 = 0x07,
+  R8 = 0x08,
+  R9 = 0x09,
+  R10 = 0x0a,
+  R11 = 0x0b,
+  R12 = 0x0c,
+  R13 = 0x0d,
+  R14 = 0x0e,
+  R15 = 0x0f,
 }
 
 impl Gpr {
