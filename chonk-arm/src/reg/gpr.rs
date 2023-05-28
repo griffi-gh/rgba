@@ -82,7 +82,7 @@ impl Gpr {
     // Safety: Value must be in range: 0 ..= 0xf
     unsafe { std::mem::transmute(value) }
   }
-
+  
   pub fn with_mode(self, mode: Mode) -> ModeGpr {
     //Safety: trust me bro
     let value = match self as u8 {

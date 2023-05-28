@@ -1,5 +1,4 @@
-mod gpr;
-pub use gpr::Gpr;
+pub mod gpr;
 
 pub struct Registers {
   storage: [u32; 16]
