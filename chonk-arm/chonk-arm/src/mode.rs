@@ -9,3 +9,9 @@ pub enum Mode {
   Irq,
   Undefined,
 }
+impl Mode {
+  /// Returns [`true`](bool) if Mode matches [`System`](Mode::System)/[`User`](Mode::User)
+  pub const fn userlike(&self) -> bool {
+    matches!(self, Mode::User | Mode::System)
+  }
+}
