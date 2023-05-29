@@ -5,6 +5,9 @@ version = 3
 [[package]]
 name = "chonk-arm"
 version = "0.0.0"
+dependencies = [
+ "chonk-arm-proc",
+]
 
 [[package]]
 name = "chonk-arm-proc"
@@ -18,10 +21,16 @@ dependencies = [
 [[package]]
 name = "chonk-frontend"
 version = "0.0.0"
+dependencies = [
+ "chonk-gba",
+]
 
 [[package]]
 name = "chonk-gba"
 version = "0.0.0"
+dependencies = [
+ "chonk-arm",
+]
 
 [[package]]
 name = "proc-macro2"

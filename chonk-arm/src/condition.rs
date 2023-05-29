@@ -33,63 +33,38 @@ pub enum Condition {
   UnsignedLowerOrSame = 0x9,
 
   /// GE; N=V; signed greater or equal
-  SignedGreaterOrEqual = 0xA,
+  SignedGreaterOrEqual = 0xa,
 
   /// LT; N<>V; signed less than
-  SignedLessThan = 0xB,
+  SignedLessThan = 0xb,
 
   /// GT; Z=0 and N=V; signed greater than
-  SignedGreaterThan = 0xC,
+  SignedGreaterThan = 0xc,
 
   /// LE; Z=1 or N<>V; signed less or equal
-  SignedLessOrEqual = 0xD,
+  SignedLessOrEqual = 0xd,
 
   /// AL; always (the "AL" suffix can be omitted)
   #[default]
-  Always = 0xE,
+  Always = 0xe,
 
   /// NV; never (ARMv1,v2 only) (Reserved ARMv3 and up)\
   ///
   /// - Should be treated like [`Always`](Condition::Always) on ARMv4\
   ///   Added here just for the sake of completeness
-  Reserved = 0xF,
-}
-
-impl Condition {
-  /// Converts [`u8`] into [`Condition`]\
-  /// 4 highest bits are ignored
-  #[inline]
-  pub const fn from_u8(value: u8) -> Self {
-    // Safety: Masks the value to ensure it's within the enum's range
-    unsafe { std::mem::transmute(value & 0xf) }
-  }
-
-  /// Converts [`u8`] into [`Condition`]\
-  /// Safety: value must be in range: 0 ..= 0xf
-  #[inline]
-  pub const unsafe fn from_u8_unchecked(value: u8) -> Self {
-    debug_assert!(value <= 0xf);
-    // Safety: Value must be in range: 0 ..= 0xf
-    unsafe { std::mem::transmute(value) }
-  }
-
-  /// Converts [`Condition`] into [`u8`]
-  #[inline]
-  pub const fn into_u8(self) -> u8 {
-    self as u8
-  }
+  Reserved = 0xf,
 }
 
 impl From<u8> for Condition {
   #[inline]
   fn from(value: u8) -> Self {
-    Self::from_u8(value)
+    unsafe { std::mem::transmute(value & 0xf) }
   }
 }
 
 impl From<Condition> for u8 {
   #[inline]
   fn from(value: Condition) -> Self {
-    value.into_u8()
+    value as u8
   }
 }
