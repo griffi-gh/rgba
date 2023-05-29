@@ -1,8 +1,8 @@
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 #[repr(u8)]
 pub enum Mode {
-  System,
-  User,
+  System = 0x80,
+  User = 0x81,
   Fiq,
   Supervisor,
   Abort,
