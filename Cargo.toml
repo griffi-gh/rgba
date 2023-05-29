@@ -1,3 +1,8 @@
 [workspace]
-members = ["chonk-arm", "chonk-arm-proc", "chonk-gba", "chonk-frontend"]
+members = [
+  "chonk-arm/chonk-arm",
+  "chonk-arm/chonk-arm-proc",
+  "chonk-gba",
+  "chonk-frontend"
+]
 resolver = "2"
