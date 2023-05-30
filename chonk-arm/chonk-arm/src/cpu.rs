@@ -4,8 +4,8 @@ use crate::{
 };
 
 pub struct Cpu {
-  reg: Registers,
-  mem: MemoryBus,
+  pub reg: Registers,
+  pub mem: MemoryBus,
 }
 
 impl Cpu {
@@ -14,11 +14,5 @@ impl Cpu {
       reg: Registers::new(),
       mem: MemoryBus::new(mem)
     }
-  }
-  pub fn interface(&self) -> &(dyn MemoryInterface + 'static) {
-    self.mem.interface.as_ref()
-  }
-  pub fn interface_mut(&mut self) -> &mut (dyn MemoryInterface + 'static) {
-    self.mem.interface.as_mut()
   }
 }

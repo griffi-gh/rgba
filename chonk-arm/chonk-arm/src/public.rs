@@ -9,9 +9,9 @@ impl Arm7Tdmi {
     Self(Cpu::new(mem))
   }
   pub fn interface(&self) -> &(dyn MemoryInterface + 'static) {
-    self.0.interface()
+    self.0.mem.interface.as_ref()
   }
   pub fn interface_mut(&mut self) -> &mut (dyn MemoryInterface + 'static) {
-    self.0.interface_mut()
+    self.0.mem.interface.as_mut()
   }
 }
