@@ -50,9 +50,9 @@ impl Scheduler {
     }
   }
 
-  /// Update scheduler timestamp by specified amount of cycles
+  /// Advance the scheduler's timestamp by a specified number of cycles.
   #[inline]
-  pub fn update(&mut self, cycles: usize) {
+  pub fn advance(&mut self, cycles: usize) {
     self.timestamp += cycles;
   }
 
