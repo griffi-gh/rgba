@@ -1,5 +1,7 @@
 use chonk_arm::{Arm7Tdmi, MemoryInterface};
 
+mod scheduler;
+
 struct MemoryBus;
 impl MemoryInterface for MemoryBus {
   fn read_8(&self, addr: u32) -> u8 { todo!() }
