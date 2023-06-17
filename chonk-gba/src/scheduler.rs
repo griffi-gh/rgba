@@ -74,21 +74,17 @@ impl Scheduler {
   /// Retrieve the next pending event that is ready for execution, removing it from the scheduler.
   #[inline]
   pub fn poll_event(&mut self) -> Option<EventType> {
-    let Some(event) = self.events.peek() else {
-      return None
-    };
-    if self.timestamp >= event.timestamp {
-      return None
-    }
-    // SAFETY: events.peek() above guarantees that event exists
-    // (`unwrap_unchecked` should panic on debug)
-    unsafe { Some(self.events.pop().unwrap_unchecked().event) }
+    //SAFETY: length > 0 is enforced by peek
+    self.events.peek()
+      .is_some_and(|&event| self.timestamp >= event.timestamp)
+      .then(|| unsafe { self.events.pop().unwrap_unchecked().event })
   }
 
   /// Fast forward to the next event
   #[inline]
   pub fn fast_forward(&mut self) {
-    let Some(event) = self.events.peek() else { return };
-    self.timestamp = event.timestamp;
+    if let Some(event) = self.events.peek() {
+      self.timestamp = event.timestamp;
+    }
   }
 }
