@@ -73,7 +73,7 @@ impl Scheduler {
 
   /// Retrieve the next pending event that is ready for execution, removing it from the scheduler.
   #[inline]
-  pub fn poll_event(&mut self) -> Option<EventType> {
+  pub fn poll(&mut self) -> Option<EventType> {
     //SAFETY: length > 0 is enforced by peek
     self.events.peek()
       .is_some_and(|&event| self.timestamp >= event.timestamp)
