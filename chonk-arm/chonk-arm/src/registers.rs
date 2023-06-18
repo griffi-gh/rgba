@@ -37,4 +37,19 @@ impl Registers {
   pub fn get_mut(&mut self, reg: u8, mode: Mode) -> &mut u32 {
     &mut self.gpr[Self::reg_idx(reg, mode)]
   }
+
+  #[inline(always)]
+  pub const fn get_user(&self, reg: u8) -> u32 {
+    self.gpr[(reg & 0xf) as usize]
+  }
+
+  #[inline(always)]
+  pub fn get_user_mut(&mut self, reg: u8) -> &mut u32 {
+    &mut self.gpr[(reg & 0xf) as usize]
+  }
+
+  #[inline(always)]
+  pub const fn pc(&self) -> u32 {
+    self.gpr[15]
+  }
 }
