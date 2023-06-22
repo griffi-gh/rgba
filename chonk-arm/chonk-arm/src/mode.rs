@@ -1,5 +1,8 @@
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+use modular_bitfield::BitfieldSpecifier;
+
+#[derive(BitfieldSpecifier, Clone, Copy, PartialEq, Eq, Debug)]
 #[repr(u8)]
+#[bits = 5]
 pub enum Mode {
   User = 0x10,
   Fiq = 0x11,
