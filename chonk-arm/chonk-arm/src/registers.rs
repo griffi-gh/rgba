@@ -1,4 +1,16 @@
+use modular_bitfield::{bitfield, specifiers::*};
 use crate::mode::Mode;
+
+///TODO: PSR
+#[bitfield]
+#[repr(u32)]
+#[derive(Clone, Copy, Debug, Default)]
+struct Psr {
+  __: u32
+}
+
+///TODO: remove this
+const PSR_DEFAULT: Psr = Psr { bytes: [0; 4] };
 
 #[derive(Clone, Copy)]
 pub struct Registers {
@@ -8,13 +20,17 @@ pub struct Registers {
   /// - $10-14 - fiq r8-12
   /// - $15-2a - r13-14 for all modes except user\
   ///   (with some empty space for opt purposes)
-  gpr: [u32; 0x2b]
+  gpr: [u32; 0x2b],
+  /// internal storage for gpr Registers\
+  /// CPSR SPSR_fiq SPSR_svc SPSR_abt SPSR_irq SPSR_und
+  psr: [Psr; 6],
 }
 
 impl Registers {
   pub const fn new() -> Self {
     Self {
-      gpr: [0; 0x2b]
+      gpr: [0; 0x2b],
+      psr: [PSR_DEFAULT; 6],
     }
   }
 
