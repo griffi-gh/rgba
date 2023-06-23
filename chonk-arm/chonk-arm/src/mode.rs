@@ -9,7 +9,7 @@ pub enum Mode {
   Irq = 0x12,
   Supervisor = 0x13,
   Abort = 0x17,
-  Undefined = 0x1B,
+  Undefined = 0x1b,
   System = 0x1f,
 }
 impl Mode {
