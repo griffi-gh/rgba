@@ -5,12 +5,11 @@ use crate::mode::Mode;
 #[bitfield]
 #[repr(u32)]
 #[derive(Clone, Copy, Debug, Default)]
-struct Psr {
+pub struct Psr {
   __: u32
 }
 
-///TODO: remove this
-const PSR_DEFAULT: Psr = Psr { bytes: [0; 4] };
+const PSR_ZERO: Psr = Psr { bytes: [0; 4] };
 
 #[derive(Clone, Copy)]
 pub struct Registers {
@@ -21,16 +20,16 @@ pub struct Registers {
   /// - $15-2a - r13-14 for all modes except user\
   ///   (with some empty space for opt purposes)
   gpr: [u32; 0x2b],
-  /// internal storage for gpr Registers\
-  /// CPSR SPSR_fiq SPSR_svc SPSR_abt SPSR_irq SPSR_und
-  psr: [Psr; 6],
+  /// internal storage for PSR Registers\
+  /// CPSR + SPSR (with some empty space for opt purposes)
+  psr: [Psr; 0x10],
 }
 
 impl Registers {
   pub const fn new() -> Self {
     Self {
       gpr: [0; 0x2b],
-      psr: [PSR_DEFAULT; 6],
+      psr: [PSR_ZERO; 0x10],
     }
   }
 
@@ -67,5 +66,33 @@ impl Registers {
   #[inline(always)]
   pub const fn pc(&self) -> u32 {
     self.gpr[15]
+  }
+
+  #[inline(always)]
+  pub const fn cpsr(&self) -> Psr {
+    self.psr[0]
+  }
+
+  #[inline(always)]
+  pub fn cpsr_mut(&mut self) -> &mut Psr {
+    &mut self.psr[0]
+  }
+
+  //XXX: maybe return Option<Psr> instead?
+
+  #[inline(always)]
+  pub const fn spsr(&self, mode: Mode) -> Psr {
+    match mode.userlike() {
+      true => self.psr[0],
+      false => self.psr[mode as usize]
+    }
+  }
+
+  #[inline(always)]
+  pub fn spsr_mut(&mut self, mode: Mode) -> &mut Psr {
+    match mode.userlike() {
+      true => &mut self.psr[0],
+      false => &mut self.psr[mode as usize]
+    }
   }
 }
