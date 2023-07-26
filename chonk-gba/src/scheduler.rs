@@ -24,7 +24,7 @@ impl Eq for Event {}
 impl PartialOrd for Event {
   #[inline]
   fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-    Some(self.timestamp.cmp(&other.timestamp))
+    Some(self.cmp(other))
   }
 }
 
