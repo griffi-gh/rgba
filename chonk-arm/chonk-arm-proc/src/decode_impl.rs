@@ -1,7 +1,9 @@
-fn decode_arm(instr: u32) -> Exec {
+use crate::{ExecArm, ExecThumb};
 
+pub(crate) fn decode_arm(instr: u32) -> ExecArm {
+  ExecArm::Panic
 }
 
-fn decode_thumb(instr: u32) -> Exec {
-
+pub(crate) fn decode_thumb(instr: u32) -> ExecThumb {
+  ExecThumb::Panic
 }
