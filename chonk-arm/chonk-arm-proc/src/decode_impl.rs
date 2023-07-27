@@ -1,5 +1,7 @@
-use proc_macro2::TokenStream as TokenStream2;
+fn decode_arm(instr: u32) -> Exec {
 
-fn decode_arm(instr: u32) {
+}
+
+fn decode_thumb(instr: u32) -> Exec {
 
 }
