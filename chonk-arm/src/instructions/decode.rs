@@ -43,9 +43,6 @@ macro_rules! lut {
       VALUE
     }
   };
-
-  // (_count_tokens) => (0_usize);
-  // (_count_tokens $x:tt $($s: tt)*) => (1usize + lut!(_count_tokens $($s)*));
 }
 
 mod lut {
@@ -55,8 +52,8 @@ mod lut {
     (false, (false, false))
   }
   
-  const ARM_LUT: [ArmInstrHandler; 1] = lut!{
-    [ArmInstrHandler; 1] => [
+  const ARM_LUT: [ArmInstrHandler; 4] = lut!{
+    [ArmInstrHandler; 4] => [
       exec_test_bool<0 bool, 1 bool>: decode_test_bool,
       exec_panic: always
     ]
