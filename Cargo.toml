@@ -1,6 +1,7 @@
 [workspace]
 members = [
-  "chonk-arm",
+  "chonk-arm/chonk-arm",
+  "chonk-arm/chonk-arm-proc",
   "chonk-gba",
   "chonk-frontend"
 ]
