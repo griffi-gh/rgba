@@ -6,16 +6,9 @@ version = 3
 name = "chonk-arm"
 version = "0.0.0"
 dependencies = [
- "chonk-arm-proc",
  "modular-bitfield",
-]
-
-[[package]]
-name = "chonk-arm-proc"
-version = "0.0.0"
-dependencies = [
- "proc-macro2",
- "quote",
+ "paste",
+ "seq-macro",
 ]
 
 [[package]]
@@ -54,6 +47,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "paste"
+version = "1.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
+
+[[package]]
 name = "proc-macro2"
 version = "1.0.66"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -70,6 +69,12 @@ checksum = "50f3b39ccfb720540debaa0164757101c08ecb8d326b15358ce76a62c7e85965"
 dependencies = [
  "proc-macro2",
 ]
+
+[[package]]
+name = "seq-macro"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a3f0bf26fd526d2a95683cd0f87bf103b8539e2ca1ef48ce002d67aad59aa0b4"
 
 [[package]]
 name = "static_assertions"
