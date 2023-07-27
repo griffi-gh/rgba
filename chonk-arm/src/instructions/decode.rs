@@ -1,33 +1,41 @@
 macro_rules! lut {
   {
     [$ty:ident; $size:literal] => [$(
-      $fn:ident $(<$($generic: ty),*>)* : $d_fn:ident
+      $fn:ident $(<$($index: literal $generic: ty),*>)* : $decode_fn:ident
     $(,)*),*]
   } => {
+    
     {
       use ::seq_macro::seq;
-      use ::paste::paste;
+
+      #[allow(unused)]
+      const fn always<const I: u8>() -> (bool,) { (true,) }
 
       const VALUE: [$ty; $size] = {
         seq!(N in 0..$size {
           [#({
-            let mut x = 0;
-            paste! {
-              $(
-                const (DID_MATCH, [<L_ $fn:upper>]): (bool, $ty) = {
-                  const DECODE_RESULT: (bool, $($($generic),*)*) = $d_fn::<N>();
-                  (DECODE_RESULT.0, exec_panic)
-                };
-              )*
-              // $(
-              //   const DECODE_RESULT: ($($($generic),*)*,) = (false,);
-              //   const [<L_ $fn:upper>]: $ty = $fn::<seq!(G in 0..lut!(count_generics $($($generic),*)*)) {
-              //     DECODE_RESULT.G
-              //   })>;
-              // )*
+            let mut resolv: Option<$ty> = None;
+            $(
+              #[allow(clippy::redundant_pattern_matching)]
+              if matches!(resolv, None) {
+                const DECODE_RESULT: (bool, $(($($generic),*,))*) = $decode_fn::<{N as _}>();
+                
+                if (DECODE_RESULT.0) {
+                  resolv = Some(
+                    $fn::<$($(
+                      {
+                        stringify!($generic);
+                        DECODE_RESULT.1.$index
+                      },
+                    )*)*>
+                  );
+                }
+              }
+            )*
+            match resolv {
+              Some(x) => x,
+              None => panic!(""),
             }
-
-            
           },)*]
         })
       };
@@ -36,25 +44,21 @@ macro_rules! lut {
     }
   };
 
-  (_count_tokens) => (0_usize);
-  (_count_tokens $x:tt $($s: tt)*) => (1usize + lut!(_count_tokens $($s)*));
+  // (_count_tokens) => (0_usize);
+  // (_count_tokens $x:tt $($s: tt)*) => (1usize + lut!(_count_tokens $($s)*));
 }
-
-const _X: super::ArmInstrHandler = {
-  const _Y: super::ArmInstrHandler = super::exec::exec_panic;
-  _Y
-};
 
 mod lut {
   use super::{lut, super::{ArmInstrHandler, exec::*}};
-  
-  const fn decode_test_bool<const I: u32>() -> (bool, bool) {
-    (false, false)
+
+  const fn decode_test_bool<const I: u32>() -> (bool, (bool, bool)) {
+    (false, (false, false))
   }
   
   const ARM_LUT: [ArmInstrHandler; 1] = lut!{
     [ArmInstrHandler; 1] => [
-      exec_test_bool<bool>: decode_test_bool
+      exec_test_bool<0 bool, 1 bool>: decode_test_bool,
+      exec_panic: always
     ]
   };
 }
