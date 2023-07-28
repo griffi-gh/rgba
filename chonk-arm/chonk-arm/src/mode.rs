@@ -1,8 +1,8 @@
-use modular_bitfield::BitfieldSpecifier;
+use proc_bitfield::UnsafeFrom;
+use strum::FromRepr;
 
-#[derive(BitfieldSpecifier, Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, FromRepr)]
 #[repr(u8)]
-#[bits = 5]
 pub enum Mode {
   User = 0x10,
   Fiq = 0x11,
@@ -16,5 +16,25 @@ impl Mode {
   /// Returns [`true`](bool) if Mode matches [`System`](Mode::System)/[`User`](Mode::User)
   pub const fn userlike(&self) -> bool {
     matches!(self, Mode::User | Mode::System)
+  }
+}
+
+impl From<Mode> for u8 {
+  fn from(value: Mode) -> Self {
+    value as u8
+  }
+}
+
+impl TryFrom<u8> for Mode {
+  type Error = ();
+  fn try_from(discriminant: u8) -> Result<Self, Self::Error> {
+    Self::from_repr(discriminant).ok_or(())
+  }
+}
+
+impl UnsafeFrom<u8> for Mode {
+  /// SAFETY: must be a valid value for Mode
+  unsafe fn unsafe_from(discriminant: u8) -> Self {
+    std::mem::transmute(discriminant)
   }
 }

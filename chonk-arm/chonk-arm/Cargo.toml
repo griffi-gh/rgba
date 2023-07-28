@@ -5,4 +5,5 @@ edition = "2021"
 
 [dependencies]
 chonk-arm-proc = { path = "../chonk-arm-proc" }
-modular-bitfield = "0.11.2"
+proc-bitfield = "0.2"
+strum = { version = "0.25", features = ["derive"] }

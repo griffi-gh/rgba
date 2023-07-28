@@ -1,3 +1,4 @@
+use proc_bitfield::BitRange;
 use crate::cpu::Cpu;
 
 pub fn panic(cpu: &mut Cpu, instr: u16) {
@@ -9,5 +10,18 @@ pub fn add_sub<
   const IMM: bool,
   const RN: u8,
 >(cpu: &mut Cpu, instr: u16) {
-  todo!()
+  let rd: u8 = instr.bit_range::<0, 3>();
+  let rs: u8 = instr.bit_range::<3, 6>();
+
+  let lhs = cpu.reg.get(rs);
+  let rhs = if IMM { RN as u32 } else { cpu.reg.get(RN) };
+
+  let mut flags = cpu.reg.cpsr().flags();
+  let result = if SUB {
+    flags.alu_sub(lhs, rhs)
+  } else {
+    flags.alu_add(lhs, rhs)
+  };
+  cpu.reg.cpsr_mut().set_flags(flags);
+  *cpu.reg.get_mut(rd) = result;
 }
