@@ -25,13 +25,19 @@ impl ExecArm {
 pub(crate) enum ExecThumb {
   #[default]
   Panic,
+  AddSub {
+    sub: bool,
+    imm: bool,
+    rn: u8
+  }
 }
 
 impl ExecThumb {
-  pub fn token(&self) -> TokenStream2 {
+  pub fn token(self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
       Self::Panic => quote!(orbit::handlers::thumb::panic),
+      Self::AddSub { sub, imm, rn} => quote!(orbit::handlers::thumb::add_sub::<#sub, #imm, #rn>),
     }
   }
 }
@@ -54,7 +60,7 @@ pub fn arm_lut(_: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn thumb_lut(_: TokenStream) -> TokenStream {
   let fns: Vec<TokenStream2> = (0..1024)
-    .map(|x| decode_thumb(x).token())
+    .map(|x| decode_thumb(x << 6).token())
     .collect();
 
   quote!(

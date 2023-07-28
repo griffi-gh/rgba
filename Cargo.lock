@@ -14,6 +14,7 @@ dependencies = [
 name = "chonk-arm-proc"
 version = "0.0.0"
 dependencies = [
+ "const-twiddle",
  "proc-macro2",
  "quote",
 ]
@@ -30,6 +31,15 @@ name = "chonk-gba"
 version = "0.0.0"
 dependencies = [
  "chonk-arm",
+]
+
+[[package]]
+name = "const-twiddle"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f7203b503dd16d25adfb6212aaa0e2089b2df2dfee6a2c84cd68202f6128b3e7"
+dependencies = [
+ "paste",
 ]
 
 [[package]]
@@ -52,6 +62,12 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "paste"
+version = "1.0.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
 
 [[package]]
 name = "proc-macro2"
