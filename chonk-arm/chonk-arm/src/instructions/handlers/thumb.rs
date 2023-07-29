@@ -1,6 +1,7 @@
 use proc_bitfield::BitRange;
 use crate::cpu::Cpu;
 
+#[allow(clippy::needless_pass_by_ref_mut)]
 pub fn panic(cpu: &mut Cpu, instr: u16) {
   panic!("panic handler; pc: {:08x}, instr {instr:04x}", cpu.reg.pc())
 }

@@ -14,12 +14,14 @@ pub enum Mode {
 }
 impl Mode {
   /// Returns [`true`](bool) if Mode matches [`System`](Mode::System)/[`User`](Mode::User)
+  #[inline]
   pub const fn userlike(&self) -> bool {
     matches!(self, Mode::User | Mode::System)
   }
 }
 
 impl From<Mode> for u8 {
+  #[inline]
   fn from(value: Mode) -> Self {
     value as u8
   }
@@ -27,6 +29,8 @@ impl From<Mode> for u8 {
 
 impl TryFrom<u8> for Mode {
   type Error = ();
+
+  #[inline]
   fn try_from(discriminant: u8) -> Result<Self, Self::Error> {
     Self::from_repr(discriminant).ok_or(())
   }
@@ -34,6 +38,7 @@ impl TryFrom<u8> for Mode {
 
 impl UnsafeFrom<u8> for Mode {
   /// SAFETY: must be a valid value for Mode
+  #[inline]
   unsafe fn unsafe_from(discriminant: u8) -> Self {
     std::mem::transmute(discriminant)
   }

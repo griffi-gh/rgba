@@ -2,7 +2,7 @@ use std::{collections::BinaryHeap, cmp::Ordering};
 
 #[derive(Clone, Copy, Debug)]
 pub enum EventType {
-  Todo
+  _Todo
 }
 
 #[derive(Clone, Copy, Debug)]

@@ -46,7 +46,7 @@ impl Registers {
     }
   }
 
-  #[inline(always)]
+  #[inline]
   const fn reg_idx(r: u8, mode: Mode) -> usize {
     let r = r as usize & 0xf;
     match r {
@@ -56,54 +56,54 @@ impl Registers {
     }
   }
 
-  #[inline(always)]
+  #[inline]
   pub const fn get_mode(&self, reg: u8, mode: Mode) -> u32 {
     self.gpr[Self::reg_idx(reg, mode)]
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn get_mode_mut(&mut self, reg: u8, mode: Mode) -> &mut u32 {
     &mut self.gpr[Self::reg_idx(reg, mode)]
   }
 
-  #[inline(always)]
+  #[inline]
   pub const fn get_user(&self, reg: u8) -> u32 {
     self.gpr[(reg & 0xf) as usize]
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn get_user_mut(&mut self, reg: u8) -> &mut u32 {
     &mut self.gpr[(reg & 0xf) as usize]
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn get(&self, reg: u8) -> u32 {
     self.get_mode(reg, self.current_mode())
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn get_mut(&mut self, reg: u8) -> &mut u32 {
     self.get_mode_mut(reg, self.current_mode())
   }
 
-  #[inline(always)]
+  #[inline]
   pub const fn pc(&self) -> u32 {
     self.gpr[15]
   }
 
-  #[inline(always)]
+  #[inline]
   pub const fn cpsr(&self) -> Psr {
     self.psr[0]
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn cpsr_mut(&mut self) -> &mut Psr {
     &mut self.psr[0]
   }
 
   //XXX: maybe return Option<Psr> instead?
 
-  #[inline(always)]
+  #[inline]
   pub const fn spsr(&self, mode: Mode) -> Psr {
     match mode.userlike() {
       true => self.psr[0],
@@ -111,7 +111,7 @@ impl Registers {
     }
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn spsr_mut(&mut self, mode: Mode) -> &mut Psr {
     match mode.userlike() {
       true => &mut self.psr[0],
@@ -119,7 +119,7 @@ impl Registers {
     }
   }
 
-  #[inline(always)]
+  #[inline]
   pub fn current_mode(&self) -> Mode {
     self.cpsr().mode().unwrap()
   }
