@@ -3,6 +3,12 @@
 version = 3
 
 [[package]]
+name = "bit_field"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc827186963e592360843fb5ba4b973e145841266c1357f7180c43526f2e5b61"
+
+[[package]]
 name = "chonk-arm"
 version = "0.0.0"
 dependencies = [
@@ -15,7 +21,7 @@ dependencies = [
 name = "chonk-arm-proc"
 version = "0.0.0"
 dependencies = [
- "const-twiddle",
+ "bit_field",
  "proc-macro2",
  "quote",
 ]
@@ -35,25 +41,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "const-twiddle"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7203b503dd16d25adfb6212aaa0e2089b2df2dfee6a2c84cd68202f6128b3e7"
-dependencies = [
- "paste",
-]
-
-[[package]]
 name = "heck"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
-
-[[package]]
-name = "paste"
-version = "1.0.14"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de3145af08024dea9fa9914f381a17b8fc6034dfb00f3a84013f7ff43f29ed4c"
 
 [[package]]
 name = "proc-bitfield"

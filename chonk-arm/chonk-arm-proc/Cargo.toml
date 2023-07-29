@@ -7,7 +7,7 @@ edition = "2021"
 proc-macro = true
 
 [dependencies]
-const-twiddle = "0.1"
+bit_field = "0.10"
 proc-macro2 = "1.0"
 quote = "1.0"
 #syn = "2.0"
