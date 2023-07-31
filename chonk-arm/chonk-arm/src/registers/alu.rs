@@ -4,6 +4,7 @@ impl AluFlags {
   ///Updates sign and zero based on result
   #[inline]
   pub fn alu_flags(&mut self, result: u32, carry: bool, overflow: bool) {
+    //XXX: is shifting faster?
     self.set_sign((result as i32) < 0);
     self.set_zero(result == 0);
     self.set_carry(carry);

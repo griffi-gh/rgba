@@ -7,7 +7,7 @@ pub fn panic(cpu: &mut Cpu, instr: u16) {
 }
 
 pub fn add_sub<
-  const SUB: bool,
+  const OP: bool,
   const IMM: bool,
   const RN: u8,
 >(cpu: &mut Cpu, instr: u16) {
@@ -18,7 +18,7 @@ pub fn add_sub<
   let rhs = if IMM { RN as u32 } else { cpu.reg.get(RN) };
 
   let mut flags = cpu.reg.cpsr().flags();
-  let result = if SUB {
+  let result = if OP {
     flags.alu_sub(lhs, rhs)
   } else {
     flags.alu_add(lhs, rhs)
