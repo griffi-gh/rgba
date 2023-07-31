@@ -1,34 +1,33 @@
-use std::{collections::BinaryHeap, cmp::Ordering};
+use std::{collections::{BinaryHeap, binary_heap::PeekMut}, cmp::Ordering};
 
 #[derive(Clone, Copy, Debug)]
-pub enum EventType {
+pub enum Event {
   _Todo
 }
 
 #[derive(Clone, Copy, Debug)]
-pub struct Event {
-  event: EventType,
-  /// Cycle on which event should occur
-  timestamp: usize,
+struct FutureEvent {
+  event: Event,
+  timestamp: u64,
 }
 
-impl PartialEq for Event {
+impl PartialEq for FutureEvent {
   #[inline]
   fn eq(&self, other: &Self) -> bool {
     self.timestamp == other.timestamp
   }
 }
 
-impl Eq for Event {}
+impl Eq for FutureEvent {}
 
-impl PartialOrd for Event {
+impl PartialOrd for FutureEvent {
   #[inline]
   fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
     Some(self.cmp(other))
   }
 }
 
-impl Ord for Event {
+impl Ord for FutureEvent {
   fn cmp(&self, other: &Self) -> Ordering {
     self.timestamp.cmp(&other.timestamp)
   }
@@ -36,8 +35,8 @@ impl Ord for Event {
 
 pub struct Scheduler {
   /// Current timestamp in cycles
-  timestamp: usize,
-  events: BinaryHeap<Event>,
+  timestamp: u64,
+  events: BinaryHeap<FutureEvent>,
 }
 
 impl Scheduler {
@@ -52,32 +51,40 @@ impl Scheduler {
 
   /// Advance the scheduler's timestamp by a specified number of cycles.
   #[inline]
-  pub fn advance(&mut self, cycles: usize) {
+  pub fn advance(&mut self, cycles: u64) {
     self.timestamp += cycles;
   }
 
   /// Get current scheduler timestamp
   #[inline]
-  pub fn timestamp(&self) -> usize {
+  pub fn timestamp(&self) -> u64 {
     self.timestamp
   }
 
   /// Schedule an event for execution in `when` cycles from now
   #[inline]
-  pub fn schedule(&mut self, when: usize, event: EventType) {
-    self.events.push(Event {
+  pub fn schedule_relative(&mut self, when: u64, event: Event) {
+    self.events.push(FutureEvent {
       event,
       timestamp: self.timestamp + when
+    })
+  }
+  
+  /// Schedule an event to be executed on exactly `when`th cycle
+  #[inline]
+  pub fn schedule_absolute(&mut self, when: u64, event: Event) {
+    self.events.push(FutureEvent {
+      event,
+      timestamp: when
     })
   }
 
   /// Retrieve the next pending event that is ready for execution, removing it from the scheduler.
   #[inline]
-  pub fn poll(&mut self) -> Option<EventType> {
-    //SAFETY: length > 0 is enforced by peek
-    self.events.peek()
-      .is_some_and(|&event| self.timestamp >= event.timestamp)
-      .then(|| unsafe { self.events.pop().unwrap_unchecked().event })
+  pub fn poll(&mut self) -> Option<Event> {
+    self.events.peek_mut().and_then(|event| {
+      (self.timestamp >= event.timestamp).then(|| PeekMut::pop(event).event)
+    })
   }
 
   /// Fast forward to the next event
