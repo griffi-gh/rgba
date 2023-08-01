@@ -13,7 +13,7 @@ pub(crate) enum ArmHandler {
 }
 
 impl ArmHandler {
-  pub fn to_fn_token_stream(&self) -> TokenStream2 {
+  pub fn to_fn_token_stream(self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
       Self::Panic => quote!(orbit::handlers::arm::panic),
