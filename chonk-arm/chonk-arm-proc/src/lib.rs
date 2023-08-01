@@ -49,6 +49,12 @@ pub(crate) enum ThumbHandler {
   LdrPc {
     rd: u8,
   },
+  LdrStr {
+    //op: load + byte
+    load: bool,
+    byte: bool,
+    ro: u8,
+  },
 }
 
 impl ThumbHandler {
@@ -62,6 +68,7 @@ impl ThumbHandler {
       Self::AluOp { op } => quote!(orbit::handlers::thumb::alu_op::<#op>),
       Self::HiRegBx { op, hd, hs } => quote!(orbit::handlers::thumb::hi_reg_bx::<#op, #hd, #hs>),
       Self::LdrPc { rd } => quote!(orbit::handlers::thumb::ldr_pc::<#rd>),
+      Self::LdrStr { load, byte, ro } => quote!(orbit::handlers::thumb::ldr_str::<#load, #byte, #ro>),
     }
   }
 }

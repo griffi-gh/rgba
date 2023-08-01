@@ -67,8 +67,19 @@ pub fn hi_reg_bx<
   todo!("hi_reg_bx")
 }
 
+/// format 6 \
 pub fn ldr_pc<
   const RD: u8,
 >(cpu: &mut Cpu, instr: u16) {
   todo!("ldr_pc")
+}
+
+/// format 7 \
+/// ldr/str reg offs.
+pub fn ldr_str<
+  const LOAD: bool,
+  const BYTE: bool,
+  const RO: u8,
+>(cpu: &mut Cpu, instr: u16) {
+  todo!("ldr_str")
 }
