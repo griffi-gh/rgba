@@ -6,7 +6,9 @@ pub fn panic(cpu: &mut Cpu, instr: u16) {
   panic!("panic handler; pc: {:08x}, instr {instr:04x}", cpu.reg.pc())
 }
 
-/// reg[rd] = reg[rs] shifted (shift op = OP) by OFFSET
+/// format 1  \
+/// move reg shifted \
+/// `reg[rd] = reg[rs] shifted (shift op = OP) by OFFSET`
 pub fn shifted<
   const OP: u8,
   const OFFSET: u8,
@@ -14,7 +16,9 @@ pub fn shifted<
   todo!("shifted/barrel shifter stuff")
 }
 
-/// reg[rd] = reg[rs] OP?[-]:[+] IMM?(rn):(reg[rn])
+/// format 2 \
+/// add/sub \
+/// `reg[rd] = reg[rs] OP?[-]:[+] IMM?(rn):(reg[rn])`
 pub fn add_sub<
   const OP: bool,
   const IMM: bool,
@@ -34,4 +38,21 @@ pub fn add_sub<
   };
   cpu.reg.cpsr_mut().set_flags(flags);
   *cpu.reg.get_mut(rd) = result;
+}
+
+/// format 3 \
+/// data process immediate
+pub fn immediate<
+  const OP: u8,
+  const RD: u8,
+>(cpu: &mut Cpu, instr: u16) {
+  todo!("data process immediate")
+}
+
+/// format 4 \
+/// alu operations
+pub fn alu_op<
+  const OP: u8,
+>(cpu: &mut Cpu, instr: u16) {
+  todo!("alu_op")
 }

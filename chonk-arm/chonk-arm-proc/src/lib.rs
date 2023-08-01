@@ -13,7 +13,7 @@ pub(crate) enum ArmHandler {
 }
 
 impl ArmHandler {
-  pub fn token(&self) -> TokenStream2 {
+  pub fn to_fn_token_stream(&self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
       Self::Panic => quote!(orbit::handlers::arm::panic),
@@ -33,16 +33,25 @@ pub(crate) enum ThumbHandler {
     op: bool,
     imm: bool,
     rn: u8
-  }
+  },
+  Immediate {
+    op: u8,
+    rd: u8,
+  },
+  AluOp {
+    op: u8,
+  },
 }
 
 impl ThumbHandler {
-  pub fn token(self) -> TokenStream2 {
+  pub fn to_fn_token_stream(self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
+      Self::Panic => quote!(orbit::handlers::thumb::panic),
       Self::Shifted { op, offset } => quote!(orbit::handlers::thumb::shifted::<#op, #offset>),
       Self::AddSub { op, imm, rn} => quote!(orbit::handlers::thumb::add_sub::<#op, #imm, #rn>),
-      Self::Panic => quote!(orbit::handlers::thumb::panic),
+      Self::Immediate { op, rd } => quote!(orbit::handlers::thumb::immediate::<#op, #rd>),
+      Self::AluOp { op } => quote!(orbit::handlers::thumb::alu_op::<#op>),
     }
   }
 }
@@ -50,7 +59,7 @@ impl ThumbHandler {
 #[proc_macro]
 pub fn arm_lut(_: TokenStream) -> TokenStream {
   let fns: Vec<TokenStream2> = (0..4096)
-    .map(|x| decode_arm(x).token())
+    .map(|x| decode_arm(x).to_fn_token_stream())
     .collect();
 
   quote!(
@@ -65,7 +74,7 @@ pub fn arm_lut(_: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn thumb_lut(_: TokenStream) -> TokenStream {
   let fns: Vec<TokenStream2> = (0..1024)
-    .map(|x| decode_thumb(x << 6).token())
+    .map(|x| decode_thumb(x << 6).to_fn_token_stream())
     .collect();
 
   quote!(
