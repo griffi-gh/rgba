@@ -7,12 +7,12 @@ mod decode_impl;
 use decode_impl::{decode_arm, decode_thumb};
 
 #[derive(Clone, Copy, Debug, Default)]
-pub(crate) enum ExecArm {
+pub(crate) enum ArmHandler {
   #[default]
   Panic,
 }
 
-impl ExecArm {
+impl ArmHandler {
   pub fn token(&self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
@@ -22,7 +22,7 @@ impl ExecArm {
 }
 
 #[derive(Clone, Copy, Debug, Default)]
-pub(crate) enum ExecThumb {
+pub(crate) enum ThumbHandler {
   #[default]
   Panic,
   Shifted {
@@ -36,7 +36,7 @@ pub(crate) enum ExecThumb {
   }
 }
 
-impl ExecThumb {
+impl ThumbHandler {
   pub fn token(self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
@@ -55,8 +55,8 @@ pub fn arm_lut(_: TokenStream) -> TokenStream {
 
   quote!(
     {
-      use crate::orbit;
-      const VALUE: [orbit::ArmInstrHandler; 4096] = [#(#fns),*];
+      use crate::_orbit as orbit;
+      const VALUE: [orbit::ArmHandlerFn; 4096] = [#(#fns),*];
       VALUE
     }
   ).into()
@@ -70,8 +70,8 @@ pub fn thumb_lut(_: TokenStream) -> TokenStream {
 
   quote!(
     {
-      use crate::orbit;
-      const VALUE: [orbit::ThumbInstrHandler; 1024] = [#(#fns),*];
+      use crate::_orbit as orbit;
+      const VALUE: [orbit::ThumbHandlerFn; 1024] = [#(#fns),*];
       VALUE
     }
   ).into()
