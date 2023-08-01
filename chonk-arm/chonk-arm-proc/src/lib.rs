@@ -25,7 +25,10 @@ impl ExecArm {
 pub(crate) enum ExecThumb {
   #[default]
   Panic,
-  Shifted { }, //TODO
+  Shifted {
+    op: u8,
+    offset: u8,
+  },
   AddSub {
     op: bool,
     imm: bool,
@@ -37,7 +40,7 @@ impl ExecThumb {
   pub fn token(self) -> TokenStream2 {
     #[allow(unreachable_patterns)]
     match self {
-      Self::Shifted { .. } => todo!(),
+      Self::Shifted { op, offset } => quote!(orbit::handlers::thumb::shifted::<#op, #offset>),
       Self::AddSub { op, imm, rn} => quote!(orbit::handlers::thumb::add_sub::<#op, #imm, #rn>),
       Self::Panic => quote!(orbit::handlers::thumb::panic),
     }

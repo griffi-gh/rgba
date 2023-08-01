@@ -6,6 +6,15 @@ pub fn panic(cpu: &mut Cpu, instr: u16) {
   panic!("panic handler; pc: {:08x}, instr {instr:04x}", cpu.reg.pc())
 }
 
+/// reg[rd] = reg[rs] shifted (shift op = OP) by OFFSET
+pub fn shifted<
+  const OP: u8,
+  const OFFSET: u8,
+>(cpu: &mut Cpu, instr: u16) {
+  todo!("shifted/barrel shifter stuff")
+}
+
+/// reg[rd] = reg[rs] OP?[-]:[+] IMM?(rn):(reg[rn])
 pub fn add_sub<
   const OP: bool,
   const IMM: bool,
