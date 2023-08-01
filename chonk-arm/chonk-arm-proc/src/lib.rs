@@ -74,7 +74,7 @@ pub fn arm_lut(_: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn thumb_lut(_: TokenStream) -> TokenStream {
   let fns: Vec<TokenStream2> = (0..1024)
-    .map(|x| decode_thumb(x << 6).to_fn_token_stream())
+    .map(|x| decode_thumb(x).to_fn_token_stream())
     .collect();
 
   quote!(
