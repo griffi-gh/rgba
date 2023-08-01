@@ -66,3 +66,9 @@ pub fn hi_reg_bx<
 >(cpu: &mut Cpu, instr: u16) {
   todo!("hi_reg_bx")
 }
+
+pub fn ldr_pc<
+  const RD: u8,
+>(cpu: &mut Cpu, instr: u16) {
+  todo!("ldr_pc")
+}

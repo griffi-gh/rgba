@@ -34,6 +34,10 @@ pub(crate) fn decode_thumb(idx: u16) -> ThumbHandler {
       hd: instr.get_bit(7),
       hs: instr.get_bit(6),
     }
+  } else if instr.get_bits(11..=15) == 0b01001 {
+    ThumbHandler::LdrPc {
+      rd: instr.get_bits(8..=10) as u8,
+    }
   } else {
     ThumbHandler::Panic
   }

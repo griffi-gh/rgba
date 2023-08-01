@@ -46,6 +46,9 @@ pub(crate) enum ThumbHandler {
     hd: bool,
     hs: bool,
   },
+  LdrPc {
+    rd: u8,
+  },
 }
 
 impl ThumbHandler {
@@ -58,6 +61,7 @@ impl ThumbHandler {
       Self::Immediate { op, rd } => quote!(orbit::handlers::thumb::immediate::<#op, #rd>),
       Self::AluOp { op } => quote!(orbit::handlers::thumb::alu_op::<#op>),
       Self::HiRegBx { op, hd, hs } => quote!(orbit::handlers::thumb::hi_reg_bx::<#op, #hd, #hs>),
+      Self::LdrPc { rd } => quote!(orbit::handlers::thumb::ldr_pc::<#rd>),
     }
   }
 }
