@@ -28,6 +28,12 @@ pub(crate) fn decode_thumb(idx: u16) -> ThumbHandler {
     ThumbHandler::AluOp {
       op: instr.get_bits(6..=9) as u8,
     }
+  } else if instr.get_bits(10..=15) == 0b010001 {
+    ThumbHandler::HiRegBx {
+      op: instr.get_bits(8..=9) as u8,
+      hd: instr.get_bit(7),
+      hs: instr.get_bit(6),
+    }
   } else {
     ThumbHandler::Panic
   }

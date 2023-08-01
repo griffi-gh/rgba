@@ -56,3 +56,13 @@ pub fn alu_op<
 >(cpu: &mut Cpu, instr: u16) {
   todo!("alu_op")
 }
+
+/// format 5 \
+/// hi reg operation/bx
+pub fn hi_reg_bx<
+  const OP: u8,
+  const HD: bool,
+  const HS: bool,
+>(cpu: &mut Cpu, instr: u16) {
+  todo!("hi_reg_bx")
+}
