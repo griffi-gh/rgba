@@ -1,5 +1,5 @@
 [package]
-name = "chonk-arm-proc"
+name = "rgbarm-proc"
 version = "0.0.0"
 edition = "2021"
 

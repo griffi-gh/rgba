@@ -1,0 +1,7 @@
+[package]
+name = "rgba"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+rgbarm = { path = "../rgbarm/rgbarm" }

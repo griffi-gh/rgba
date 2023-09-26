@@ -1,9 +1,9 @@
 [package]
-name = "chonk-arm"
+name = "rgbarm"
 version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-chonk-arm-proc = { path = "../chonk-arm-proc" }
-proc-bitfield = "0.2"
+rgbarm-proc = { path = "../rgbarm-proc" }
+proc-bitfield = "0.3"
 strum = { version = "0.25", features = ["derive"] }

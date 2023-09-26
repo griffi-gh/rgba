@@ -1,7 +1,0 @@
-[package]
-name = "chonk-gba"
-version = "0.0.0"
-edition = "2021"
-
-[dependencies]
-chonk-arm = { path = "../chonk-arm/chonk-arm" }

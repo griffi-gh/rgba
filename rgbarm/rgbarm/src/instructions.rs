@@ -1,4 +1,4 @@
-use chonk_arm_proc::{arm_lut, thumb_lut};
+use rgbarm_proc::{arm_lut, thumb_lut};
 use crate::cpu::Cpu;
 
 pub mod handlers;

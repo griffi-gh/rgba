@@ -1,4 +1,4 @@
-use chonk_arm::{Arm7Tdmi, MemoryInterface};
+use rgbarm::{Arm7Tdmi, MemoryInterface};
 
 mod scheduler;
 

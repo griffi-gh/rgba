@@ -1,8 +1,8 @@
 [workspace]
 members = [
-  "chonk-arm/chonk-arm",
-  "chonk-arm/chonk-arm-proc",
-  "chonk-gba",
-  "chonk-frontend"
+  "rgbarm/rgbarm",
+  "rgbarm/rgbarm-proc",
+  "rgba",
+  "rgba-player"
 ]
 resolver = "2"
