@@ -12,6 +12,7 @@ pub enum Mode {
   Undefined = 0x1b,
   System = 0x1f,
 }
+
 impl Mode {
   /// Returns [`true`](bool) if Mode matches [`System`](Mode::System)/[`User`](Mode::User)
   #[inline]

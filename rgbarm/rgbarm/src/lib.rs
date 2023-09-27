@@ -6,7 +6,7 @@ mod cpu;
 mod instructions;
 
 /// Internal usage only
-pub mod _orbit {
+pub(crate) mod _orbit {
   pub use crate::instructions::{handlers, ArmHandlerFn, ThumbHandlerFn};
 }
 

@@ -121,6 +121,6 @@ impl Registers {
 
   #[inline]
   pub fn current_mode(&self) -> Mode {
-    self.cpsr().mode().unwrap()
+    self.cpsr().mode().expect("Invalid mode written to CPSR")
   }
 }
